@@ -10,10 +10,8 @@ def create_database_if_not_exists(db_name):
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS rfid_tags (
             TagID TEXT PRIMARY KEY,
-            Type TEXT,
-            Antenna TEXT,
-            RSSI TEXT,
             Datetime TEXT,
+            Product TEXT,
             Comment TEXT
         )
         ''')
@@ -31,12 +29,9 @@ def insert_or_update_records(db_name, data):
     for tag in data:
         print(tag)
         cursor.execute('''
-        INSERT INTO rfid_tags (TagID, Type, Antenna, RSSI, Datetime)
-        VALUES (:TagID, :Type, :Antenna, :RSSI, :Datetime)
+        INSERT INTO rfid_tags (TagID, Datetime)
+        VALUES (:TagID, :Datetime)
         ON CONFLICT(TagID) DO UPDATE SET
-            Type=excluded.Type,
-            Antenna=excluded.Antenna,
-            RSSI=excluded.RSSI,
             Datetime=excluded.Datetime
         ''', tag)
 
