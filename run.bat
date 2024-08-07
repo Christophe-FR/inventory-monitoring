@@ -1,1 +1,1 @@
-streamlit run read.py
+streamlit run frontend.py
